@@ -3,9 +3,9 @@
 class Comparacao {
  int _id;
  String _posto;
- double _precoEtanol;
- double _precoGasolina;
- DateTime _dataAtual;
+ String _precoEtanol;
+ String _precoGasolina;
+ String _dataAtual;
 
  //constutor 
  Comparacao(this._dataAtual, this._posto, this._precoEtanol, this._precoGasolina);
@@ -20,9 +20,9 @@ Comparacao.map(dynamic obj){
 }
 int get id => _id;
 String get posto => _posto;
-double get precoEtanol => _precoEtanol;
-double get precoGasolina=> _precoGasolina;
-DateTime get dataAtual => _dataAtual;
+String get precoEtanol => _precoEtanol;
+String get precoGasolina=> _precoGasolina;
+String get dataAtual => _dataAtual;
 
 Map<String, dynamic> toMap(){
   var mapa = new Map<String, dynamic>();  

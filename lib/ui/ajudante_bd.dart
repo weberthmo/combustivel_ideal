@@ -57,7 +57,7 @@ class BDadosAjudante {
           "$colunaNomePosto STRING"
           "$colunaPrecoEtanol DOUBLE"
           "$colunaPrecoGasolina DOUBLE"
-          "$colunaDataAtual DATETIME");
+          "$colunaDataAtual DATETIME)");
         
   }
   //inserir
@@ -85,7 +85,7 @@ class BDadosAjudante {
     var bdComparacao = await db;
     var res = await bdComparacao.rawQuery(
       "SELECT * FROM $tabelaComparacao"
-      "WHERE $colunaId = $id");
+      " WHERE $colunaId = $id");
     if (res.length == 0) return null;
     return new Comparacao.fromMap(res.first);
       
@@ -96,7 +96,7 @@ class BDadosAjudante {
 
       return await bdComparacao.delete(
         "SELECT * FROM $tabelaComparacao"
-        "WHERE $colunaId = ?", whereArgs: [id]);
+        " WHERE $colunaId = ?", whereArgs: [id]);
     }
     //atualizar comparações
     Future<int> atualizarComparacoes(Comparacao comparacao) async{

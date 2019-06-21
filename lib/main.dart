@@ -1,7 +1,7 @@
 import 'package:combustivel_ideal/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:package_info/package_info.dart' as package_info;
+//import 'package:package_info/package_info.dart' as package_info;
 
 void main() {
   var materialApp = MaterialApp(
@@ -14,10 +14,6 @@ void main() {
 
   
 }
-
-
-
-
 class SplashScreen extends StatefulWidget {
 
   @override
