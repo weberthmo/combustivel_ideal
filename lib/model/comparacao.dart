@@ -1,4 +1,5 @@
 
+//objeto Usuário
 class Comparacao {
  int _id;
  String _posto;
@@ -24,8 +25,7 @@ double get precoGasolina=> _precoGasolina;
 DateTime get dataAtual => _dataAtual;
 
 Map<String, dynamic> toMap(){
-  var mapa = new Map<String, dynamic>();
-  
+  var mapa = new Map<String, dynamic>();  
   mapa ["posto"] = _posto;
   mapa ["precoEtanol"] = _precoEtanol;
   mapa ["precoGasolina"] = _precoGasolina;
@@ -34,6 +34,16 @@ Map<String, dynamic> toMap(){
     mapa ["id"] = _id;    
   }
   return mapa;
+
+}
+
+Comparacao.fromMap(Map<String, dynamic> mapa){
+
+  this._id = mapa['id'];
+  this._posto = mapa['posto'];
+  this._precoEtanol = mapa['precoEtanol'];
+  this._precoGasolina = mapa['precoGasolina'];
+  this._dataAtual = mapa['dataAtual'];
 
 }
 
