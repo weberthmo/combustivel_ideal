@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:combustivel_ideal/page/historico_page.dart';
 
 
 //List _todasComparacoes;
@@ -24,15 +26,38 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   
-
+Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () { },
+  );
 
   Widget buildAppBar(){
     return AppBar(
-    title: Text ("Combustivel Ideal"),
+    title: Text ("Combustível Ideal", style: TextStyle(color: Colors.white, fontSize: 25),),
+    
+    
     centerTitle: true,
-    backgroundColor: Colors.orange,
+    backgroundColor: Colors.blue,
+    
     actions: <Widget>[
-      Icon(Icons.history),
+      //Icon(Icons.history),
+      RaisedButton(
+        child: Icon(
+          Icons.history,
+          color: Colors.white,
+          size: 40,
+          
+        ),
+        color: Colors.blue,
+        
+        
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => Historico()
+          ));
+        },
+      ) 
+      
           
     ]
     );
@@ -41,27 +66,28 @@ class _HomeState extends State<Home> {
   Widget buildScaffold(){
     return Scaffold(
       appBar: buildAppBar(),
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10.0),
         child: Column(
           
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: "Nome do Posto",),
+              decoration: InputDecoration(labelText: "Nome do Posto", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.text,
             ),
             TextField(
-              decoration: InputDecoration(labelText: "Preço do Etanol",),
+              decoration: InputDecoration(labelText: "Preço do Etanol", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.number,
 
             ),
             TextField(
-              decoration: InputDecoration(labelText: "Preço da Gasolina",),
+              decoration: InputDecoration(labelText: "Preço da Gasolina", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: InputDecoration(labelText: "Data Atual",),
+              decoration: InputDecoration(labelText: "Data Atual", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
+              style: TextStyle(color: Colors.blue),
               keyboardType: TextInputType.datetime,
             ),
               
@@ -71,9 +97,26 @@ class _HomeState extends State<Home> {
                   mainAxisSize: MainAxisSize.max,
 
                   children: <Widget>[
-                    RaisedButton(
-                    child: Text("Comparar",style: TextStyle(fontSize: 40),),
-                      onPressed: null,
+                    RaisedButton(                      
+                      child: Text("Comparar", style: TextStyle(color: Colors.white, fontSize: 30),),
+                      color: Colors.blue,
+                      elevation: 4.0,
+                      splashColor: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      onPressed:(){
+                        showDialog(
+                          context: context,
+                          builder: (ctxt) => new AlertDialog(
+                          title: Text("Resultado"),
+                          content: Text("Para o abastecimento o XX é mais vantajoso!"),
+                          actions: <Widget>[
+                            okButton
+                          ],
+                          ),
+                          
+                          
+                        );
+                      }
                     ),
                   ],
                 ),

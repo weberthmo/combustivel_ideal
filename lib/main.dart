@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 //import 'package:package_info/package_info.dart' as package_info;
 
+
 void main() {
   var materialApp = MaterialApp(
     //desabilitando banner debug
@@ -47,13 +48,13 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
-      title: Text("App Combustivel Ideal"),
+      title: Text("App Combustível Ideal"),
       centerTitle: true,
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.white,
     );
 
     Scaffold scaffold = Scaffold(
-      backgroundColor: Colors.orange,
+      backgroundColor: Colors.white,
       appBar: appBar,
       body: Container(
         padding: EdgeInsets.all(32),
