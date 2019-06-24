@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:combustivel_ideal/page/historico_page.dart';
+import 'package:combustivel_ideal/util/info_app.dart';
+
 
 
 //List _todasComparacoes;
 void main() async {
+  
 
   //var db = new BDadosAjudante();
 
@@ -19,21 +22,53 @@ void main() async {
 
 }
 class Home extends StatefulWidget {
+  
   @override
 
   _HomeState createState() => _HomeState();
 }
 
+
 class _HomeState extends State<Home> {
-  
-Widget okButton = FlatButton(
+
+   TextEditingController _textFieldController = TextEditingController();
+
+  _onClear() {
+    setState(() {
+      _textFieldController.text = "";
+    });
+  }
+
+//inicio limpar campos
+  TextEditingController gasolinaController = TextEditingController();
+  TextEditingController etanolController = TextEditingController();
+  TextEditingController postoController = TextEditingController();
+  TextEditingController dataController = TextEditingController();
+
+  void _limparCampos(){
+    gasolinaController.text= "";
+    etanolController.text= "";
+    postoController.text= "";
+    dataController.text= "";
+
+  }
+//fim limpar campos
+
+
+
+Widget botaoOK = FlatButton(
     child: Text("OK"),
-    onPressed: () { },
+    onPressed: () {      
+    },
   );
+
+
+  
 
   Widget buildAppBar(){
     return AppBar(
     title: Text ("Combustível Ideal", style: TextStyle(color: Colors.white, fontSize: 25),),
+
     
     
     centerTitle: true,
@@ -65,6 +100,7 @@ Widget okButton = FlatButton(
 
   Widget buildScaffold(){
     return Scaffold(
+      
       appBar: buildAppBar(),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -75,20 +111,24 @@ Widget okButton = FlatButton(
             TextField(
               decoration: InputDecoration(labelText: "Nome do Posto", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.text,
+              controller: postoController,
             ),
             TextField(
               decoration: InputDecoration(labelText: "Preço do Etanol", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.number,
+              controller: etanolController,
 
             ),
             TextField(
               decoration: InputDecoration(labelText: "Preço da Gasolina", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.number,
+              controller: gasolinaController,
             ),
             TextField(
               decoration: InputDecoration(labelText: "Data Atual", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               style: TextStyle(color: Colors.blue),
               keyboardType: TextInputType.datetime,
+              controller: dataController,
             ),
               
                 
@@ -103,6 +143,7 @@ Widget okButton = FlatButton(
                       elevation: 4.0,
                       splashColor: Colors.blueAccent,
                       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
+                      
                       onPressed:(){
                         showDialog(
                           context: context,
@@ -110,7 +151,18 @@ Widget okButton = FlatButton(
                           title: Text("Resultado"),
                           content: Text("Para o abastecimento o XX é mais vantajoso!"),
                           actions: <Widget>[
-                            okButton
+                            //botaoOK
+                            
+                            FlatButton(
+                              child: Text("OK"),
+                              
+                                onPressed: () {
+                                  _onClear();
+                                  Navigator.pop(context);
+                                  _limparCampos();
+                                     
+                                },
+                              )                            
                           ],
                           ),
                           
@@ -123,10 +175,18 @@ Widget okButton = FlatButton(
           ],
             ),
           ),
+      
+      bottomNavigationBar: BottomAppBar(
+        child: Text("Teste" , textAlign: TextAlign.center,),
+        color: Colors.blue,
+        
+      ),     
     );
   }
   @override
   Widget build(BuildContext context) {
     return buildScaffold();
+
+    
   }
 }
