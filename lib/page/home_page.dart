@@ -1,26 +1,12 @@
+
+import 'package:combustivel_ideal/helpers/comparacao_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:combustivel_ideal/page/historico_page.dart';
-import 'package:combustivel_ideal/util/info_app.dart';
+//import 'package:combustivel_ideal/model/comparacao.dart';
 
 
-
-//List _todasComparacoes;
-void main() async {
-  
-
-  //var db = new BDadosAjudante();
-
-  //_todasComparacoes = await db.pegarPostos();
-  //for(int i = 0; i < _todasComparacoes.length; i++){
-    //Comparacao comparacao = Comparacao.map(_todasComparacoes [i]);
-    //debugPrint("Usuário: ${comparacao.posto}, Id: ${comparacao.id}");
-  //}
-
-
-
-}
 class Home extends StatefulWidget {
   
   @override
@@ -31,13 +17,30 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-   TextEditingController _textFieldController = TextEditingController();
+  ComparacaoHelper helper = ComparacaoHelper();
+
+  @override
+  void initState() { 
+    super.initState();
+  }
+
+  TextEditingController _textFieldController = TextEditingController();
 
   _onClear() {
     setState(() {
       _textFieldController.text = "";
     });
   }
+
+//Informações sobre o APP
+  //PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  //String appName = packageInfo.appName;
+  //String packageName = packageInfo.packageName;
+  //String version = packageInfo.version;
+ // String buildNumber = packageInfo.buildNumber;
+//
+
 
 //inicio limpar campos
   TextEditingController gasolinaController = TextEditingController();
@@ -160,6 +163,7 @@ Widget botaoOK = FlatButton(
                                   _onClear();
                                   Navigator.pop(context);
                                   _limparCampos();
+                                  
                                      
                                 },
                               )                            
@@ -186,7 +190,6 @@ Widget botaoOK = FlatButton(
   @override
   Widget build(BuildContext context) {
     return buildScaffold();
-
-    
-  }
+    //return Container();    
+ }
 }
