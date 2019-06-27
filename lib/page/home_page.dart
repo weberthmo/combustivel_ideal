@@ -1,36 +1,79 @@
-
 import 'package:combustivel_ideal/helpers/comparacao_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:combustivel_ideal/page/historico_page.dart';
-//import 'package:combustivel_ideal/model/comparacao.dart';
+import 'package:combustivel_ideal/model/comparacao.dart';
+import 'package:sqflite/sqflite.dart';
 
 
 class Home extends StatefulWidget {
+    
   
-  @override
+  final Comparacao comparacao;
+
+  Home({this.comparacao});
 
   _HomeState createState() => _HomeState();
 }
 
-
 class _HomeState extends State<Home> {
 
   ComparacaoHelper helper = ComparacaoHelper();
+  
+  final _postoController = TextEditingController();
+  final _etanolController = TextEditingController();
+  final _gasolinaController = TextEditingController();
+  final _dataatualController = TextEditingController();
+  String opcao = "";
 
-  @override
-  void initState() { 
-    super.initState();
+  Comparacao _comparacaoTemp;
+
+   void melhorOpcao(){
+     setState(() {
+
+      double gasolina = double.parse(_gasolinaController.text);
+      double etanol = double.parse(_etanolController.text);  
+      double x = etanol / gasolina;
+      if (x < 0.7) {
+         opcao = "Etanol";
+        print ("$opcao");      
+      } else {
+         opcao = "Gasolina";
+        print ("$opcao");
+      }
+    });
   }
-
-  TextEditingController _textFieldController = TextEditingController();
 
   _onClear() {
     setState(() {
       _textFieldController.text = "";
     });
   }
+
+ 
+
+  Future salvar() async{
+    
+  }
+
+
+//@override
+//void initState() { 
+   //super.initState();
+  //_comparacaoTemp = Comparacao.fromMap(widget.comparacao.toMap());
+   //_postoController.text = _comparacaoTemp.posto;
+  //_etanolController.text = _comparacaoTemp.precoEtanol;
+  //_gasolinaController.text = _comparacaoTemp.precoGasolina;
+  //_dataatualController.text = _comparacaoTemp.dataAtual;
+   
+// }
+
+
+  
+
+  TextEditingController _textFieldController = TextEditingController();
+
 
 //Informações sobre o APP
   //PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -39,41 +82,30 @@ class _HomeState extends State<Home> {
   //String packageName = packageInfo.packageName;
   //String version = packageInfo.version;
  // String buildNumber = packageInfo.buildNumber;
-//
+
 
 
 //inicio limpar campos
-  TextEditingController gasolinaController = TextEditingController();
-  TextEditingController etanolController = TextEditingController();
-  TextEditingController postoController = TextEditingController();
-  TextEditingController dataController = TextEditingController();
-
+  
+  
   void _limparCampos(){
-    gasolinaController.text= "";
-    etanolController.text= "";
-    postoController.text= "";
-    dataController.text= "";
+    _gasolinaController.text= "";
+    _etanolController.text= "";
+    _postoController.text= "";
+    _dataatualController.text= "";
 
   }
 //fim limpar campos
 
-
-
 Widget botaoOK = FlatButton(
     child: Text("OK"),
-    onPressed: () {      
+    onPressed: () {          
     },
   );
-
-
-  
 
   Widget buildAppBar(){
     return AppBar(
     title: Text ("Combustível Ideal", style: TextStyle(color: Colors.white, fontSize: 25),),
-
-    
-    
     centerTitle: true,
     backgroundColor: Colors.blue,
     
@@ -113,25 +145,45 @@ Widget botaoOK = FlatButton(
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: "Nome do Posto", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
-              keyboardType: TextInputType.text,
-              controller: postoController,
+              keyboardType: TextInputType.text,          
+              
+              onChanged: (text){
+                //_comparacaoEdited = true;
+                 _comparacaoTemp.posto = text;
+                },
+                controller: _postoController,
             ),
             TextField(
               decoration: InputDecoration(labelText: "Preço do Etanol", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
-              keyboardType: TextInputType.number,
-              controller: etanolController,
+              keyboardType: TextInputType.number,              
+              onChanged: (text){
+                //_comparacaoEdited = true;
+                _comparacaoTemp.precoEtanol = text;
+                },
+              controller: _etanolController,
+
 
             ),
             TextField(
               decoration: InputDecoration(labelText: "Preço da Gasolina", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               keyboardType: TextInputType.number,
-              controller: gasolinaController,
+              
+              onChanged: (text){
+                //_comparacaoEdited = true;
+                 _comparacaoTemp.precoGasolina = text;
+                },
+                controller: _gasolinaController,
             ),
             TextField(
-              decoration: InputDecoration(labelText: "Data Atual", labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
+              decoration: InputDecoration(labelText: "Data Atual",labelStyle: TextStyle(color: Colors.blue[900], fontSize: 20)),
               style: TextStyle(color: Colors.blue),
               keyboardType: TextInputType.datetime,
-              controller: dataController,
+              
+              onChanged: (text){
+                //_comparacaoEdited = true;
+                 _comparacaoTemp.dataAtual = text;
+                },
+                controller: _dataatualController,
             ),
               
                 
@@ -148,17 +200,20 @@ Widget botaoOK = FlatButton(
                       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       
                       onPressed:(){
+                        salvar();
+                        melhorOpcao();
                         showDialog(
                           context: context,
                           builder: (ctxt) => new AlertDialog(
                           title: Text("Resultado"),
-                          content: Text("Para o abastecimento o XX é mais vantajoso!"),
+                          content: Text("Para o abastecimento com $opcao e mais Vantajoso!"),
+
+                          
                           actions: <Widget>[
                             //botaoOK
                             
                             FlatButton(
-                              child: Text("OK"),
-                              
+                              child: Text("OK"),                              
                                 onPressed: () {
                                   _onClear();
                                   Navigator.pop(context);
@@ -179,12 +234,7 @@ Widget botaoOK = FlatButton(
           ],
             ),
           ),
-      
-      bottomNavigationBar: BottomAppBar(
-        child: Text("Teste" , textAlign: TextAlign.center,),
-        color: Colors.blue,
-        
-      ),     
+           
     );
   }
   @override
@@ -192,4 +242,6 @@ Widget botaoOK = FlatButton(
     return buildScaffold();
     //return Container();    
  }
+ 
+
 }

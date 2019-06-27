@@ -48,9 +48,9 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
-      title: Text("App Combustível Ideal"),
+      title: Text ("Etanol VS Gasolina", style: TextStyle(color: Colors.white, fontSize: 25),),
       centerTitle: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.blue,
     );
 
     Scaffold scaffold = Scaffold(
@@ -62,14 +62,17 @@ class SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              getImage("logo_combustivel.png"),
-              
+              getImage("logo_combustivel.png"),              
             ],
           ),
         ),
       ),
       
-      
+      bottomNavigationBar: BottomAppBar(
+        child: Text("Teste" , textAlign: TextAlign.center,),
+        color: Colors.blue,
+        
+      ),
     );
 
     return scaffold;

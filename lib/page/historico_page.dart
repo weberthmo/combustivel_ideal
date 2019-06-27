@@ -3,7 +3,7 @@ import 'package:combustivel_ideal/helpers/comparacao_helper.dart';
 import 'package:combustivel_ideal/model/comparacao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:io';
+//import 'dart:io';
 
 
 
