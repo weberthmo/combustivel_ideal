@@ -70,7 +70,7 @@ Widget buildScaffold(){
           
         ),
        bottomNavigationBar: BottomAppBar(
-        child: Text("Teste" , textAlign: TextAlign.center,),
+        child: Text("version: 1.0.0+1" , textAlign: TextAlign.center,),
         color: Colors.blue,
         
       ), 

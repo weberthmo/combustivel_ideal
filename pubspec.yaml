@@ -26,6 +26,7 @@ dependencies:
   path_provider: 1.1.0
   package_info: 0.4.0+4
   sqflite: 1.1.5
+  yaml: 2.1.16
 
 dev_dependencies:
   flutter_test:

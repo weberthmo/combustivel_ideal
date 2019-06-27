@@ -4,7 +4,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:combustivel_ideal/page/historico_page.dart';
 import 'package:combustivel_ideal/model/comparacao.dart';
-import 'package:sqflite/sqflite.dart';
 
 
 class Home extends StatefulWidget {
@@ -21,23 +20,28 @@ class _HomeState extends State<Home> {
 
   ComparacaoHelper helper = ComparacaoHelper();
   
-  final _postoController = TextEditingController();
-  final _etanolController = TextEditingController();
-  final _gasolinaController = TextEditingController();
-  final _dataatualController = TextEditingController();
+  //Criaçao de objetos para usar como controladores de widgets
+  final  _postoController = TextEditingController();
+  final  _etanolController = TextEditingController();
+  final  _gasolinaController = TextEditingController();
+  final   _dataatualController = TextEditingController();
   String opcao = "";
 
   Comparacao _comparacaoTemp;
 
+  bool _comparacaoEdited = false;
+    
+
    void melhorOpcao(){
      setState(() {
-
+      
+      //passagem de valores dos controladores para variaveis
       double gasolina = double.parse(_gasolinaController.text);
       double etanol = double.parse(_etanolController.text);  
       double x = etanol / gasolina;
       if (x < 0.7) {
          opcao = "Etanol";
-        print ("$opcao");      
+        print ("$opcao");    
       } else {
          opcao = "Gasolina";
         print ("$opcao");
@@ -52,22 +56,27 @@ class _HomeState extends State<Home> {
   }
 
  
-
-  Future salvar() async{
+//inserir
+  void salvar({Comparacao comparacao}) {
+    helper.insert(comparacao);
     
   }
 
 
-//@override
-//void initState() { 
-   //super.initState();
-  //_comparacaoTemp = Comparacao.fromMap(widget.comparacao.toMap());
-   //_postoController.text = _comparacaoTemp.posto;
-  //_etanolController.text = _comparacaoTemp.precoEtanol;
-  //_gasolinaController.text = _comparacaoTemp.precoGasolina;
-  //_dataatualController.text = _comparacaoTemp.dataAtual;
-   
-// }
+@override
+  void initState(){
+    super.initState();
+    if(widget.comparacao == null){
+      _comparacaoTemp = Comparacao();
+    }else{
+      _comparacaoTemp = Comparacao.fromMap(widget.comparacao.toMap());
+
+      _postoController.text = _comparacaoTemp.posto;
+      _etanolController.text = _comparacaoTemp.precoEtanol;
+      _gasolinaController.text = _comparacaoTemp.precoGasolina;
+      _dataatualController.text = _comparacaoTemp.dataAtual;
+    }
+  }
 
 
   
@@ -149,7 +158,10 @@ Widget botaoOK = FlatButton(
               
               onChanged: (text){
                 //_comparacaoEdited = true;
+                setState(() {
+                                 
                  _comparacaoTemp.posto = text;
+                 });
                 },
                 controller: _postoController,
             ),
@@ -158,7 +170,10 @@ Widget botaoOK = FlatButton(
               keyboardType: TextInputType.number,              
               onChanged: (text){
                 //_comparacaoEdited = true;
+                setState(() {                
                 _comparacaoTemp.precoEtanol = text;
+                  
+                });
                 },
               controller: _etanolController,
 
@@ -170,7 +185,10 @@ Widget botaoOK = FlatButton(
               
               onChanged: (text){
                 //_comparacaoEdited = true;
+                setState(() {
+                  
                  _comparacaoTemp.precoGasolina = text;
+                 });
                 },
                 controller: _gasolinaController,
             ),
@@ -181,7 +199,9 @@ Widget botaoOK = FlatButton(
               
               onChanged: (text){
                 //_comparacaoEdited = true;
-                 _comparacaoTemp.dataAtual = text;
+                setState(() {
+                _comparacaoTemp.dataAtual = text;
+                 });
                 },
                 controller: _dataatualController,
             ),
@@ -236,6 +256,7 @@ Widget botaoOK = FlatButton(
           ),
            
     );
+    
   }
   @override
   Widget build(BuildContext context) {

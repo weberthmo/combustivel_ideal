@@ -1,19 +1,17 @@
 import 'package:combustivel_ideal/page/home_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-//import 'package:package_info/package_info.dart' as package_info;
 
 
 void main() {
   var materialApp = MaterialApp(
+
     //desabilitando banner debug
     debugShowCheckedModeBanner: false,
     home: SplashScreen(),
 
   );
   runApp(materialApp);
-
-  
 }
 class SplashScreen extends StatefulWidget {
 
