@@ -21,15 +21,15 @@ class _HomeState extends State<Home> {
   ComparacaoHelper helper = ComparacaoHelper();
   
   //Criaçao de objetos para usar como controladores de widgets
-  final  _postoController = TextEditingController();
-  final  _etanolController = TextEditingController();
-  final  _gasolinaController = TextEditingController();
-  final   _dataatualController = TextEditingController();
+  TextEditingController  _postoController = TextEditingController();
+  TextEditingController  _etanolController = TextEditingController();
+  TextEditingController  _gasolinaController = TextEditingController();
+  TextEditingController   _dataatualController = TextEditingController();
   String opcao = "";
 
   Comparacao _comparacaoTemp;
 
-  bool _comparacaoEdited = false;
+  //bool _comparacaoEdited = false;
     
 
    void melhorOpcao(){
@@ -57,10 +57,10 @@ class _HomeState extends State<Home> {
 
  
 //inserir
-  void salvar({Comparacao comparacao}) {
-    helper.insert(comparacao);
+  //void salvar({Comparacao comparacao}) {
+   // helper.insert(comparacao);
     
-  }
+  //}
 
 
 @override
@@ -78,9 +78,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-
-  
-
   TextEditingController _textFieldController = TextEditingController();
 
 
@@ -95,8 +92,7 @@ class _HomeState extends State<Home> {
 
 
 //inicio limpar campos
-  
-  
+
   void _limparCampos(){
     _gasolinaController.text= "";
     _etanolController.text= "";
@@ -111,6 +107,12 @@ Widget botaoOK = FlatButton(
     onPressed: () {          
     },
   );
+
+  void salvar(Comparacao _comparacaoTemp){    
+      helper.insert(_comparacaoTemp);
+    
+  }
+
 
   Widget buildAppBar(){
     return AppBar(
@@ -220,7 +222,7 @@ Widget botaoOK = FlatButton(
                       shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
                       
                       onPressed:(){
-                        salvar();
+                        salvar(_comparacaoTemp);
                         melhorOpcao();
                         showDialog(
                           context: context,
